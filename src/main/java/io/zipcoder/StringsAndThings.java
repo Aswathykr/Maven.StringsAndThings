@@ -15,9 +15,35 @@ public class StringsAndThings {
      *           countYZ("day fyyyz"); // Should return 2
      */
     public Integer countYZ(String input){
-        return null;
-    }
+        Integer countXY = 0;
+        countXY = numberOfEndingchars(input,"y");
+        countXY += numberOfEndingchars(input,"z");
 
+        if(input.endsWith("y") || input.endsWith("z"))
+            countXY++;
+        return countXY;
+    }
+    public int numberOfEndingchars(String input, String checkStr){
+        Integer countInput = 0;
+        for(int count = 0; count < input.length() - 1; ){
+            count = input.indexOf(checkStr, count);
+
+            Character nextChar;
+
+            if(count == -1)
+                break;
+            if(count < input.length() - 1) {
+                nextChar = input.charAt(count + 1);
+                if (!Character.isLetter(nextChar)) {
+                    count += 2;
+                    countInput++;
+                } else {
+                    count++;
+                }
+            }
+        }
+        return countInput;
+    }
     /**
      * Given two strings, base and remove, return a version of the base string where all instances of the remove string have
      * been removed (not case sensitive). You may assume that the remove string is length 1 or more.
@@ -28,7 +54,8 @@ public class StringsAndThings {
      *           removeString("Hello there", "x") // Should return "Hello there"
      */
     public String removeString(String base, String remove){
-        return null;
+        base = base.replace(remove, "");
+        return base;
     }
 
     /**
@@ -40,9 +67,24 @@ public class StringsAndThings {
      *           containsEqualNumberOfIsAndNot("noisxxnotyynotxisi") // Should return true
      */
     public Boolean containsEqualNumberOfIsAndNot(String input){
-        return null;
-    }
+        int isCount = noOfSubString(input, "is");
+        int notCount = noOfSubString(input, "not");
 
+        return isCount == notCount;
+    }
+    private int noOfSubString(String input, String subString) {
+        int count = 0;
+        for(int index = 0; index < input.length(); ){
+            index = input.indexOf(subString, index);
+            if(index == -1)
+                break;
+            else {
+                index += subString.length();
+                count++;
+            }
+        }
+        return count;
+    }
     /**
      * We'll say that a lowercase 'g' in a string is "happy" if there is another 'g' immediately to its left or right.
      * Return true if all the g's in the given string are happy.
@@ -51,7 +93,19 @@ public class StringsAndThings {
      *           gHappy("xxggyygxx") // Should return  false
      */
     public Boolean gIsHappy(String input){
-        return null;
+        boolean isHappy = true;
+        for(int index = 0; index < input.length(); ){
+            index = input.indexOf("g", index);
+            if(index == -1)
+                break;
+            if(index < input.length() - 1
+                    && input.charAt(index -1) != 'g' &&
+                    input.charAt(index  + 1) != 'g'){
+                return false;
+            }
+            index++;
+        }
+        return true;
     }
 
 
@@ -63,6 +117,16 @@ public class StringsAndThings {
      *            countTriple("a") // Should return 0
      */
     public Integer countTriple(String input){
-        return null;
+        Integer count = 0;
+        for(int index = 0; index < input.length()-2; index++){
+
+            if( input.charAt(index) == input.charAt(index  + 1) &&
+                    input.charAt(index) == input.charAt(index  + 2) ){
+                count++;
+            }
+
+        }
+
+        return count;
     }
 }
